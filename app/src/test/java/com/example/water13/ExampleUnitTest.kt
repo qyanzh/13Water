@@ -3,6 +3,7 @@ package com.example.water13
 import org.junit.Test
 
 import org.junit.Assert.*
+import java.util.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -12,6 +13,9 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+        Calendar.getInstance().apply {
+            timeInMillis = 1570608076 * 1000L
+            println(this)
+        }
     }
 }

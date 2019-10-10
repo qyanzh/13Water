@@ -10,7 +10,7 @@ import androidx.navigation.ui.NavigationUI
 import com.example.water13.bean.User
 import com.example.water13.component.MyNavigationUI
 import com.example.water13.component.toast
-import com.example.water13.databinding.MainActivityBinding
+import com.example.water13.databinding.ActivityMainBinding
 import com.example.water13.login.LoginActivity
 import com.example.water13.source.Repo
 import kotlinx.android.synthetic.main.nav_header.view.*
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var binding: MainActivityBinding
+    lateinit var binding: ActivityMainBinding
 
     private val navController by lazy {
         findNavController(R.id.nav_host_fragment)
@@ -28,10 +28,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.main_activity)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setupNavigation()
-        binding.navigationView.getHeaderView(0).username.text = User.instance.username
-        binding.navigationView.getHeaderView(0).userId.text = User.instance.id.toString()
+        binding.navigationView.getHeaderView(0).username.text = "用户名:" + User.instance.username
+        binding.navigationView.getHeaderView(0).userId.text = "UID:" + User.instance.id.toString()
     }
 
     override fun onSupportNavigateUp(): Boolean {

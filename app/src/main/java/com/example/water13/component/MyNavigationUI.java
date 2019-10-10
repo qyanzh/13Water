@@ -25,7 +25,7 @@ import java.lang.ref.WeakReference;
 
 public final class MyNavigationUI {
 
-    interface ExitListener {
+    public interface ExitListener {
         void exit();
     }
 

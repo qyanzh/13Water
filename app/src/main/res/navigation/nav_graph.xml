@@ -6,6 +6,15 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.water13.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        android:label="首页"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_gameFragment"
+            app:destination="@id/gameFragment" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_game"
+        android:id="@+id/gameFragment"
+        android:name="com.example.water13.game.GameFragment"
+        android:label="GameFragment" />
 </navigation>

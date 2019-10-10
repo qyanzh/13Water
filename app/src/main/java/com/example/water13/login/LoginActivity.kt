@@ -1,5 +1,6 @@
 package com.example.water13.login
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -9,11 +10,11 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.water13.*
 import com.example.water13.bean.User
 import com.example.water13.component.toast
-import com.example.water13.databinding.LoginActivityBinding
+import com.example.water13.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var binding: LoginActivityBinding
+    private lateinit var binding: ActivityLoginBinding
 
     private val viewModel: LoginViewModel by lazy {
         ViewModelProviders.of(this).get(LoginViewModel::class.java)
@@ -24,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
         if(User.instance.username!="") {
             navigateToMain()
         } else {
-            binding = DataBindingUtil.setContentView(this, R.layout.login_activity)
+            binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
             binding.model = viewModel
             subscribeUi()
         }

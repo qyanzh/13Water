@@ -64,7 +64,7 @@ object Repo {
     @Throws(Exception::class)
     suspend fun logout(user: User) {
         try {
-            Network.api.logoutAsync(User.instance.token).await().data
+            Network.api.logoutAsync(user.token).await().data
             spf.edit().clear().apply()
             User.instance = User()
         } catch (e: HttpException) {
@@ -72,4 +72,24 @@ object Repo {
         }
     }
 
+    @Throws(Exception::class)
+    suspend fun check(user: User) {
+        try {
+            val data = Network.api.checkAsync(user.token).await().data
+            if (data.user_id == null) {
+                throw Exception(data.result)
+            }
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    @Throws(Exception::class)
+    suspend fun open(user: User): OpenGameResponse.Data {
+        try {
+            return Network.api.openGameAsync(user.token).await().data
+        } catch (e: Exception) {
+            throw e
+        }
+    }
 }

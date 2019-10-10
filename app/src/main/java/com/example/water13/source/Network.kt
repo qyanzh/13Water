@@ -8,6 +8,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 
@@ -24,6 +25,14 @@ interface Api {
     /* 注销 */
     @POST("auth/logout")
     fun logoutAsync(@Header("X-Auth-Token") token: String): Deferred<LogoutResponse>
+
+    /* 验证 */
+    @GET("auth/validate")
+    fun checkAsync(@Header("X-Auth-Token") token: String): Deferred<CheckResponse>
+
+    /* 开局 */
+    @POST("game/open")
+    fun openGameAsync(@Header("X-Auth-Token") token: String): Deferred<OpenGameResponse>
 
 }
 
@@ -79,5 +88,25 @@ data class LogoutResponse(
 ) {
     data class Data(
         val result: String
+    )
+}
+
+data class CheckResponse(
+    val `data`: Data,
+    val status: Int
+) {
+    class Data {
+        var result: String? = null
+        var user_id: Int? = null
+    }
+}
+
+data class OpenGameResponse(
+    val `data`: Data,
+    val status: Int
+) {
+    data class Data(
+        val card: String,
+        val id: Int
     )
 }
