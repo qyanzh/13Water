@@ -50,7 +50,7 @@ class LoginViewModel : ViewModel() {
             success.postValue(true)
             message.postValue("登陆成功")
         } catch (e: Exception) {
-            message.postValue(e.toString())
+            message.postValue(e.message)
         }
     }
 
@@ -59,7 +59,7 @@ class LoginViewModel : ViewModel() {
             Repo.register(User(uiUsername.value!!, uiPassword.value!!))
             message.postValue("注册成功")
         } catch (e: Exception) {
-            message.postValue(e.toString())
+            message.postValue(e.message)
         }
     }
 

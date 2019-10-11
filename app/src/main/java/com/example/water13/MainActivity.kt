@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
                     startActivity(Intent(this@MainActivity, LoginActivity::class.java))
                     finish()
                 } catch (e: Throwable) {
-                    toast(e.toString())
+                    toast(e.message)
                 }
             }
         }

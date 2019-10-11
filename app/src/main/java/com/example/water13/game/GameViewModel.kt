@@ -5,10 +5,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.water13.bean.User
 import com.example.water13.source.Repo
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.util.*
 
 class GameViewModel : ViewModel() {
@@ -17,13 +14,9 @@ class GameViewModel : ViewModel() {
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    init {
-        uiScope.launch {
-            openGame()
-        }
-    }
+    var id = 0
 
-    val cardsString = MutableLiveData<String>()
+    private val cardsString = MutableLiveData<String>()
 
     val cardsImage = Transformations.map(cardsString) {
         it.split(" ").map { card ->
@@ -45,18 +38,27 @@ class GameViewModel : ViewModel() {
         }
     }
 
-    val state = MutableLiveData<String>().apply { value = "正在出牌" }
+    val state = MutableLiveData<Boolean>(false)
+
+    val stateString = Transformations.map(state) {
+        when (it) {
+            true -> "已出牌"
+            false -> "正在出牌"
+        }
+    }
 
     val history = MutableLiveData<String>()
 
     val message = MutableLiveData<String>()
 
+    val auto = MutableLiveData<Boolean>(true)
+
     fun onNextClicked() {
         cardsString.value?.let {
             history.value = """
-                ${Calendar.getInstance().time}
-                ${cardsString.value}
-                ${history.value?:""}
+            ${Calendar.getInstance().time}
+            ${cardsString.value}
+            ${history.value ?: ""}
             """
         }
         uiScope.launch {
@@ -66,14 +68,38 @@ class GameViewModel : ViewModel() {
 
     private suspend fun openGame() {
         try {
-            cardsString.postValue(Repo.open(User.instance).card)
+            val data = Repo.open(User.instance)
+            cardsString.value = (data.card)
+            id = data.id
+            state.value = false
+            submitCards()
+            state.value = true
         } catch (e: Exception) {
-            message.value = e.toString()
+            message.value = e.message
+        }
+        if (auto.value!!) {
+            delay(1000)
+            onNextClicked()
+        }
+    }
+
+    private suspend fun submitCards() {
+        val submitList = mutableListOf<String>()
+        cardsString.value?.split(" ")?.let { cardsList ->
+            submitList.add(cardsList.subList(0, 3).joinToString(" "))
+            submitList.add(cardsList.subList(3, 8).joinToString(" "))
+            submitList.add(cardsList.subList(8, 13).joinToString(" "))
+            Repo.submit(id, submitList, User.instance)
         }
     }
 
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
+    }
+
+    fun closeAuto() {
+        auto.value = false
+        message.value = null
     }
 }

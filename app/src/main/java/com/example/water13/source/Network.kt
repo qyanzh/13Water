@@ -34,6 +34,10 @@ interface Api {
     @POST("game/open")
     fun openGameAsync(@Header("X-Auth-Token") token: String): Deferred<OpenGameResponse>
 
+    /* 出牌 */
+    @POST("game/submit")
+    fun submitCardsAsync(@Header("X-Auth-Token") token: String,@Body cards:CardsDto): Deferred<SubmitResponse>
+
 }
 
 object Network {
@@ -59,6 +63,11 @@ object Network {
 data class UserDto(
     val username: String,
     val password: String
+)
+
+data class CardsDto(
+    val id: Int,
+    val card: List<String>
 )
 
 
@@ -110,3 +119,14 @@ data class OpenGameResponse(
         val id: Int
     )
 }
+
+data class SubmitResponse(
+    val `data`: Data,
+    val status: Int
+){
+    data class Data(
+        val msg: String
+    )
+}
+
+

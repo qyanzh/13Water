@@ -54,6 +54,7 @@ class GameFragment : Fragment() {
     }
 
     private fun subscribeUi() {
+        viewModel.onNextClicked()
         binding.btNext.setOnClickListener {
             viewModel.onNextClicked()
         }
@@ -72,5 +73,10 @@ class GameFragment : Fragment() {
         viewModel.message.observe(this, Observer {
             toast(it)
         })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.closeAuto()
     }
 }

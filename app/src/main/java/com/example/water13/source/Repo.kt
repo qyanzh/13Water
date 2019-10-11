@@ -4,9 +4,12 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.water13.bean.User
+import com.example.water13.component.NETWORK_ERROR_STRING
 import com.example.water13.component.SPF_FILE_NAME_USER
+import com.example.water13.component.getStatusMsg
 import com.squareup.moshi.Moshi
 import retrofit2.HttpException
+import java.net.UnknownHostException
 
 object Repo {
 
@@ -38,58 +41,61 @@ object Repo {
         )
     }
 
-    @Throws(Exception::class)
+    fun clearUser() {
+        spf.edit().clear().apply()
+        User.instance = User()
+    }
+
     suspend fun register(newUser: User) {
-        try {
+        withCatch {
             Network.api.registerAsync(newUser.toDto()).await()
-        } catch (e: HttpException) {
-            throw Exception(e.response()?.errorBody()?.string())
         }
     }
 
-    @Throws(Exception::class)
     suspend fun login(user: User) {
-        try {
+        withCatch {
             val data =
                 Network.api.loginAsync(user.toDto()).await().data
             user.id = data.user_id
             user.token = data.token
             User.instance = user
             saveUser(user)
-        } catch (e: HttpException) {
-            throw Exception(e.response()?.errorBody()?.string())
         }
     }
 
-    @Throws(Exception::class)
     suspend fun logout(user: User) {
-        try {
+        withCatch {
             Network.api.logoutAsync(user.token).await().data
-            spf.edit().clear().apply()
-            User.instance = User()
-        } catch (e: HttpException) {
-            throw Exception(e.response()?.errorBody()?.string())
+            clearUser()
         }
     }
 
-    @Throws(Exception::class)
     suspend fun check(user: User) {
-        try {
-            val data = Network.api.checkAsync(user.token).await().data
-            if (data.user_id == null) {
-                throw Exception(data.result)
-            }
-        } catch (e: Exception) {
-            throw e
+        val data = Network.api.checkAsync(user.token).await().data
+        if (data.user_id == null) {
+            throw Exception(data.result)
         }
     }
 
-    @Throws(Exception::class)
     suspend fun open(user: User): OpenGameResponse.Data {
+        return withCatch {
+            Network.api.openGameAsync(user.token).await().data
+        }
+    }
+
+    suspend fun submit(id: Int, cards: List<String>, user: User) {
+        withCatch {
+            Network.api.submitCardsAsync(user.token, CardsDto(id, cards)).await()
+        }
+    }
+
+    private suspend fun <T> withCatch(block: suspend () -> T): T {
         try {
-            return Network.api.openGameAsync(user.token).await().data
-        } catch (e: Exception) {
-            throw e
+            return block.invoke()
+        } catch (e: HttpException) {
+            throw(Exception(getStatusMsg(e)))
+        } catch (e: UnknownHostException) {
+            throw(Exception(NETWORK_ERROR_STRING))
         }
     }
 }
