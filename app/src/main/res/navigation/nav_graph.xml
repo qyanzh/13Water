@@ -11,10 +11,35 @@
         <action
             android:id="@+id/action_homeFragment_to_gameFragment"
             app:destination="@id/gameFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_historyListFragment"
+            app:destination="@id/historyListFragment" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment_game"
         android:id="@+id/gameFragment"
         android:name="com.example.water13.game.GameFragment"
-        android:label="GameFragment" />
+        android:label="战局" />
+    <fragment
+        tools:layout="@layout/fragment_history_list"
+        android:id="@+id/historyListFragment"
+        android:name="com.example.water13.history.HistoryListFragment"
+        android:label="历史战绩" >
+        <action
+            android:id="@+id/action_historyListFragment_to_detailListFragment"
+            app:destination="@id/detailListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_detail_list"
+        android:id="@+id/detailListFragment"
+        android:name="com.example.water13.history.details.DetailListFragment"
+        android:label="战绩详情" >
+        <argument
+            android:name="gameId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

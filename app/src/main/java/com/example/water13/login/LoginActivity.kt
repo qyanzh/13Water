@@ -40,6 +40,9 @@ class LoginActivity : AppCompatActivity() {
         }
         viewModel.message.observe(this, Observer {
             toast(it)
+            if(it.isNotEmpty()) {
+                viewModel.onMsgShowed()
+            }
         })
         viewModel.success.observe(this, Observer { success ->
             if (success) {

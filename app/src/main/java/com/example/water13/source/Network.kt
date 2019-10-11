@@ -7,10 +7,8 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
+import java.util.concurrent.TimeUnit
 
 interface Api {
 
@@ -36,8 +34,20 @@ interface Api {
 
     /* 出牌 */
     @POST("game/submit")
-    fun submitCardsAsync(@Header("X-Auth-Token") token: String,@Body cards:CardsDto): Deferred<SubmitResponse>
+    fun submitCardsAsync(@Header("X-Auth-Token") token: String, @Body cards: CardsDto): Deferred<SubmitResponse>
 
+    /* 历史对局 */
+    @GET("history")
+    fun getHistoryListAsync(
+        @Header("X-Auth-Token") token: String,
+        @Query("player_id") playerId: Int,
+        @Query("limit") limit: Int,
+        @Query("page") page: Int
+    ): Deferred<HistoryListResponse>
+
+    /* 对局详情 */
+    @GET("history/{id}")
+    fun getHistoryDetailAsync(@Header("X-Auth-Token") token: String, @Path("id") id: Int): Deferred<HistoryDetailResponse>
 }
 
 object Network {
@@ -54,7 +64,11 @@ object Network {
         .baseUrl("https://api.shisanshui.rtxux.xyz/")
         .addConverterFactory(MoshiConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
-        .client(clientBuilder.build())
+        .client(
+            clientBuilder.connectTimeout(10L, TimeUnit.SECONDS)
+                .readTimeout(10L, TimeUnit.SECONDS)
+                .build()
+        )
         .build()
     val api = retrofit.create(Api::class.java)
 }
@@ -123,10 +137,43 @@ data class OpenGameResponse(
 data class SubmitResponse(
     val `data`: Data,
     val status: Int
-){
+) {
     data class Data(
         val msg: String
     )
 }
+
+data class HistoryListResponse(
+    val `data`: List<Data>,
+    val status: Int
+) {
+    data class Data(
+        val card: List<String>,
+        val id: Int,
+        val score: Int,
+        val timestamp: Int
+    )
+}
+
+data class HistoryDetailResponse(
+    val `data`: Data,
+    val status: Int
+) {
+    data class Data(
+        val detail: List<Detail>,
+        val id: Int,
+        val timestamp: Int
+    )
+
+    data class Detail(
+        val card: List<String>,
+        val name: String,
+        val playerId: Int,
+        val score: Int
+    )
+}
+
+
+
 
 

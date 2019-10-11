@@ -89,6 +89,18 @@ object Repo {
         }
     }
 
+    suspend fun getHistoryList(user:User,limit:Int,page:Int):List<HistoryListResponse.Data> {
+        return withCatch{
+            Network.api.getHistoryListAsync(user.token, user.id, limit, page).await().data
+        }
+    }
+
+    suspend fun getHistoryDetail(user:User,gameId:Int) :HistoryDetailResponse{
+        return withCatch {
+            Network.api.getHistoryDetailAsync(user.token, gameId).await()
+        }
+    }
+
     private suspend fun <T> withCatch(block: suspend () -> T): T {
         try {
             return block.invoke()

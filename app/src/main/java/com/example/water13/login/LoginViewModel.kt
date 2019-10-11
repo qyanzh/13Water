@@ -21,8 +21,11 @@ class LoginViewModel : ViewModel() {
 
     val message = MutableLiveData<String>()
 
-    val success = MutableLiveData<Boolean>()
+    fun onMsgShowed() {
+        message.value = ""
+    }
 
+    val success = MutableLiveData<Boolean>()
 
     fun onLoginClicked() {
         if (uiUsername.value.isNullOrEmpty() || uiPassword.value.isNullOrEmpty()) {

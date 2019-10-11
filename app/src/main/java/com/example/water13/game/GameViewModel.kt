@@ -38,18 +38,16 @@ class GameViewModel : ViewModel() {
         }
     }
 
-    val state = MutableLiveData<Boolean>(false)
+    val stateString = MutableLiveData<String>()
 
-    val stateString = Transformations.map(state) {
-        when (it) {
-            true -> "已出牌"
-            false -> "正在出牌"
-        }
-    }
 
     val history = MutableLiveData<String>()
 
     val message = MutableLiveData<String>()
+
+    fun onMsgShowed() {
+        message.value = ""
+    }
 
     val auto = MutableLiveData<Boolean>(true)
 
@@ -71,11 +69,12 @@ class GameViewModel : ViewModel() {
             val data = Repo.open(User.instance)
             cardsString.value = (data.card)
             id = data.id
-            state.value = false
+            stateString.value = "正在出牌"
             submitCards()
-            state.value = true
+            stateString.value = "出牌完成"
         } catch (e: Exception) {
             message.value = e.message
+            stateString.value = "出牌异常"
         }
         if (auto.value!!) {
             delay(1000)

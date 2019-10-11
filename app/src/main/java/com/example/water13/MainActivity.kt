@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setupNavigation()
+        binding.lifecycleOwner = this
         binding.navigationView.getHeaderView(0).username.text = "用户名:" + User.instance.username
         binding.navigationView.getHeaderView(0).userId.text = "UID:" + User.instance.id.toString()
     }
