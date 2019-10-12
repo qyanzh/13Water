@@ -17,7 +17,7 @@
         <include
             android:id="@+id/cards"
             layout="@layout/cards_vertical"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
             app:layout_constraintBottom_toTopOf="@+id/divider"

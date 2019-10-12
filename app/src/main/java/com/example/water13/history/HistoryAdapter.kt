@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.water13.component.loadPoker
-import com.example.water13.component.pokerStringToFileName
+import com.example.water13.component.toCardImages
 import com.example.water13.databinding.HistoryListItemBinding
 import com.example.water13.source.HistoryListResponse.Data
 import kotlinx.android.synthetic.main.cards_vertical.view.*
@@ -49,7 +49,7 @@ class HistoryAdapter(private val context: Context, private val clickListener: It
                         add(card11)
                         add(card12)
                     }
-                loadPoker(context, pokerStringToFileName(item.card.joinToString(" ")), viewList)
+                loadPoker(context, item.card.joinToString(" ").toCardImages(), viewList)
             }
             binding.executePendingBindings()
         }

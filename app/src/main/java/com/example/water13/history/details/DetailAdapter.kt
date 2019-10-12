@@ -7,13 +7,10 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.water13.component.toCardImages
 import com.example.water13.component.loadPoker
-import com.example.water13.component.pokerStringToFileName
 import com.example.water13.databinding.DetailListItemBinding
-import com.example.water13.databinding.HistoryListItemBinding
-import com.example.water13.source.HistoryDetailResponse
 import com.example.water13.source.HistoryDetailResponse.Detail
-import com.example.water13.source.HistoryDetailResponse.Data
 import kotlinx.android.synthetic.main.cards_vertical.view.*
 
 class DetailAdapter(private val context: Context) :
@@ -51,7 +48,7 @@ class DetailAdapter(private val context: Context) :
                         add(card11)
                         add(card12)
                     }
-                loadPoker(context, pokerStringToFileName(item.card.joinToString(" ")), viewList)
+                loadPoker(context, item.card.joinToString(" ").toCardImages(), viewList)
             }
             binding.executePendingBindings()
         }

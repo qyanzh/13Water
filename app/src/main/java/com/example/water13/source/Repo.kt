@@ -15,8 +15,6 @@ object Repo {
 
     private lateinit var spf: SharedPreferences
 
-    private val moshi = Moshi.Builder().build()
-
     fun init(app: Application) {
         spf = app.getSharedPreferences(SPF_FILE_NAME_USER, Context.MODE_PRIVATE)
         if (spf.contains("username")) {

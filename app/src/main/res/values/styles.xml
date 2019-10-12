@@ -36,7 +36,7 @@
         <item name="android:background">?attr/colorPrimary</item>
         <item name="android:theme">@style/AppTheme</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
-        <!--<item name="android:iconTint" tools:targetApi="o">@color/primaryTextColor</item>-->
+        <!--<item name="android:iconTint" tools:targetApi="o">@flower/primaryTextColor</item>-->
     </style>
 
     <style name="TextAppearance.AppTheme.Toolbar" parent="TextAppearance.MaterialComponents.Button">

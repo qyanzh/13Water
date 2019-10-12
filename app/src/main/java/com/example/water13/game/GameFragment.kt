@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.water13.component.loadPoker
+import com.example.water13.component.toCardImages
 import com.example.water13.component.toast
 import com.example.water13.databinding.FragmentGameBinding
 import kotlinx.android.synthetic.main.cards_vertical.*
@@ -56,8 +57,8 @@ class GameFragment : Fragment() {
         binding.btNext.setOnClickListener {
             viewModel.onNextClicked()
         }
-        viewModel.cardsImage.observe(this, Observer {
-            loadPoker(context!!, it, viewList)
+        viewModel.cardsString.observe(this, Observer {
+            loadPoker(context!!, it.toCardImages(), viewList)
         })
         viewModel.message.observe(this, Observer {
             toast(it)

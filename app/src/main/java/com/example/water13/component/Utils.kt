@@ -9,6 +9,7 @@ import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
+import com.example.water13.bean.Card
 import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
@@ -55,8 +56,8 @@ fun loadPoker(context: Context, imageList: List<String>, viewList: List<ImageVie
     }
 }
 
-fun pokerStringToFileName(cards: String): List<String> {
-    return cards.split(" ").map { card ->
+fun String.toCardImages(): List<String> {
+    return this.split(" ").map { card ->
         val color = when (card[0]) {
             '&' -> "hongxin"
             '$' -> "heitao"
@@ -73,4 +74,14 @@ fun pokerStringToFileName(cards: String): List<String> {
         }
         "c_$color$num"
     }
+}
+
+fun String.toSortedCards(): List<Card> =
+    this.split(" ").map { Card(it) }.sorted()
+
+fun Char.toIndex() = when(this) {
+    '#' -> 0
+    '&' -> 1
+    '$' -> 2
+    else -> 3
 }
