@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/userInfoFragment"
+        android:id="@+id/rankFragment"
         android:icon="@drawable/ic_rank_black_24dp"
         android:checkable="true"
         android:title="排行榜" />

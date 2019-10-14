@@ -14,27 +14,36 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:padding="16dp">
 
-            <include
-                android:id="@+id/include"
-                layout="@layout/cards_vertical"
-                android:layout_width="145dp"
-                android:layout_height="116dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+            <TextView
+                android:id="@+id/tv_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="@{String.valueOf(rank.score)}"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_rank"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_rank"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="12345" />
 
             <TextView
                 android:id="@+id/tv_player_name_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="@{detail.name + ` (`+ detail.playerId + `)`}"
+                android:text="@{rank.name + ` (`+ rank.player_id + `)`}"
+                android:textColor="#000000"
                 android:textSize="18sp"
-                app:layout_constraintStart_toEndOf="@+id/include"
-                app:layout_constraintTop_toTopOf="@+id/include"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_rank"
+                app:layout_constraintStart_toEndOf="@+id/tv_rank"
+                app:layout_constraintTop_toTopOf="@+id/tv_rank"
                 tools:text="qyanzh (031702420)" />
 
             <TextView
@@ -42,22 +51,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
-                android:text="@{String.valueOf(detail.score)}"
+                android:text="@{`No.`+String.valueOf(position+1)}"
                 android:textColor="#000000"
                 android:textSize="30sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/include"
-                app:layout_constraintStart_toStartOf="@+id/tv_player_name_id"
-                app:layout_constraintTop_toTopOf="@+id/include"
-                tools:text="+10" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="No.1" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
     <data>
         <variable
-            name="detail"
-            type="com.example.water13.source.HistoryDetailResponse.Detail" />
+            name="position"
+            type="Integer" />
+        <variable
+            name="rank"
+            type="com.example.water13.source.RankResponse" />
     </data>
 
 </layout>

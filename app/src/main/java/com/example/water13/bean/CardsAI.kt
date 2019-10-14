@@ -30,9 +30,6 @@ class CardsAI(val cards: MutableList<Card>) {
     }
 
     fun getCount() {
-        cardsInNumOrder.forEach {
-            it.clear()
-        }
         cards.forEach {
             cardsInNumOrder[it.num].add(it)
             cardsInFlowerOrder[it.flower.toIndex()].add(it)
@@ -427,12 +424,9 @@ class CardsAI(val cards: MutableList<Card>) {
         }
     }
 
-
     override fun toString(): String {
         return "origin: " + orgin.joinToString(" ") {
             it.origin
         } + "\nsolved: " + solved
     }
 }
-
-

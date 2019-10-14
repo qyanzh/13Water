@@ -9,21 +9,21 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.water13.component.toast
-import com.example.water13.databinding.FragmentDetailListBinding
+import com.example.water13.databinding.FragmentRankListBinding
 
-class DetailListFragment : Fragment() {
+class RankFragment : Fragment() {
 
-    lateinit var binding: FragmentDetailListBinding
+    lateinit var binding: FragmentRankListBinding
 
-    private val viewModel: DetailViewModel by lazy {
-        ViewModelProviders.of(this).get(DetailViewModel::class.java)
+    private val viewModel: RankViewModel by lazy {
+        ViewModelProviders.of(this).get(RankViewModel::class.java)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentDetailListBinding.inflate(inflater)
+        binding = FragmentRankListBinding.inflate(inflater)
         binding.lifecycleOwner = this
         subscribeUi()
         return binding.root
@@ -36,11 +36,10 @@ class DetailListFragment : Fragment() {
                 viewModel.onMsgShowed()
             }
         })
-        viewModel.getHistoryList(DetailListFragmentArgs.fromBundle(arguments!!).gameId)
-        val adapter = DetailAdapter(context!!)
-        binding.rvDetailList.adapter = adapter
-        binding.rvDetailList.itemAnimator = null
-        viewModel.detailsList.observe(this, Observer {
+        val adapter = RankAdapter(context!!)
+        binding.rvRankList.adapter = adapter
+        binding.rvRankList.itemAnimator = null
+        viewModel.rankList.observe(this, Observer {
             adapter.submitList(it)
         })
     }

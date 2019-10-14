@@ -48,6 +48,10 @@ interface Api {
     /* 对局详情 */
     @GET("history/{id}")
     fun getHistoryDetailAsync(@Header("X-Auth-Token") token: String, @Path("id") id: Int): Deferred<HistoryDetailResponse>
+
+    /* 排行榜 */
+    @GET("rank")
+    fun getRankAsync(): Deferred<List<RankResponse>>
 }
 
 object Network {
@@ -173,7 +177,11 @@ data class HistoryDetailResponse(
     )
 }
 
-
+data class RankResponse(
+    val name: String,
+    val player_id: Int,
+    val score: Int
+)
 
 
 

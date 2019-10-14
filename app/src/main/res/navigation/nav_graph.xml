@@ -42,4 +42,9 @@
             android:name="gameId"
             app:argType="integer" />
     </fragment>
+    <fragment
+        tools:layout="@layout/fragment_rank_list"
+        android:id="@+id/rankFragment"
+        android:name="com.example.water13.history.details.RankFragment"
+        android:label="排行榜" />
 </navigation>

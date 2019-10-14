@@ -99,6 +99,12 @@ object Repo {
         }
     }
 
+    suspend fun getRank() :List<RankResponse>{
+        return withCatch {
+            Network.api.getRankAsync().await()
+        }
+    }
+
     private suspend fun <T> withCatch(block: suspend () -> T): T {
         try {
             return block.invoke()

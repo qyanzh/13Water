@@ -33,13 +33,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toTopOf="@+id/tv_time"
-                app:layout_constraintStart_toStartOf="@+id/tv_score"
-                app:layout_constraintTop_toBottomOf="@+id/tv_score"
+                app:layout_constraintStart_toStartOf="@+id/tv_rank"
+                app:layout_constraintTop_toBottomOf="@+id/tv_rank"
                 app:layout_constraintVertical_bias="0.68"
                 tools:text="对局ID:1234" />
 
             <TextView
-                android:id="@+id/tv_score"
+                android:id="@+id/tv_rank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
