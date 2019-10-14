@@ -26,4 +26,14 @@ data class Card(
             this.flower - other.flower
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        return this.num == (other as Card).num
+    }
+
+    override fun toString(): String {
+        return origin
+    }
+
+    fun reallyEquals(other:Card):Boolean = this.num == other.num && this.flower == other.flower
 }

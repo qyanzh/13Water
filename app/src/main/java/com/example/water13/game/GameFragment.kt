@@ -38,7 +38,7 @@ class GameFragment : Fragment() {
     }
 
     val viewModel: GameViewModel by lazy {
-        ViewModelProviders.of(activity!!).get(GameViewModel::class.java)
+        ViewModelProviders.of(this).get(GameViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -57,7 +57,7 @@ class GameFragment : Fragment() {
         binding.btNext.setOnClickListener {
             viewModel.onNextClicked()
         }
-        viewModel.cardsString.observe(this, Observer {
+        viewModel.solvedString.observe(this, Observer {
             loadPoker(context!!, it.toCardImages(), viewList)
         })
         viewModel.message.observe(this, Observer {
@@ -68,8 +68,4 @@ class GameFragment : Fragment() {
         })
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.closeAuto()
-    }
 }

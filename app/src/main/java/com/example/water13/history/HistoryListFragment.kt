@@ -20,7 +20,7 @@ class HistoryListFragment : Fragment() {
     lateinit var binding: FragmentHistoryListBinding
 
     private val viewModel: HistoryViewModel by lazy {
-        ViewModelProviders.of(activity!!).get(HistoryViewModel::class.java)
+        ViewModelProviders.of(this).get(HistoryViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -64,6 +64,7 @@ class HistoryListFragment : Fragment() {
                     if ((recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition() + 1 == recyclerView.adapter?.itemCount) {
                         Log.d("TAG", "到底了")
                         viewModel.getHistoryList()
+                        toast("加载中")
                     }
                 }
             }

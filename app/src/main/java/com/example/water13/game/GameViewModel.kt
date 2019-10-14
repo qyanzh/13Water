@@ -2,7 +2,9 @@ package com.example.water13.game
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.water13.bean.CardsAI
 import com.example.water13.bean.User
+import com.example.water13.component.toSortedCards
 import com.example.water13.source.Repo
 import kotlinx.coroutines.*
 import java.util.*
@@ -17,6 +19,8 @@ class GameViewModel : ViewModel() {
 
     val cardsString = MutableLiveData<String>()
 
+    var solvedString = MutableLiveData<String>()
+
     val stateString = MutableLiveData<String>()
 
     val history = MutableLiveData<String>()
@@ -30,10 +34,10 @@ class GameViewModel : ViewModel() {
     val auto = MutableLiveData<Boolean>(false)
 
     fun onNextClicked() {
-        cardsString.value?.let {
+        solvedString.value?.let {
             history.value = """
             ${Calendar.getInstance().time}
-            ${cardsString.value}
+            ${solvedString.value}
             ${history.value ?: ""}
             """
         }
@@ -60,14 +64,11 @@ class GameViewModel : ViewModel() {
         }
     }
 
+
     private suspend fun submitCards() {
-        val submitList = mutableListOf<String>()
-        cardsString.value?.split(" ")?.let { cardsList ->
-            submitList.add(cardsList.subList(0, 3).joinToString(" "))
-            submitList.add(cardsList.subList(3, 8).joinToString(" "))
-            submitList.add(cardsList.subList(8, 13).joinToString(" "))
-            Repo.submit(id, submitList, User.instance)
-        }
+        val solved = CardsAI(cardsString.value!!.toSortedCards().toMutableList()).solve().solved
+        solvedString.value = solved.joinToString(" ")
+        Repo.submit(id,solved,User.instance)
     }
 
     override fun onCleared() {
@@ -75,8 +76,4 @@ class GameViewModel : ViewModel() {
         viewModelJob.cancel()
     }
 
-    fun closeAuto() {
-        auto.value = false
-        message.value = null
-    }
 }

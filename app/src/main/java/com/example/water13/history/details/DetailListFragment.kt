@@ -17,7 +17,7 @@ class DetailListFragment : Fragment() {
     lateinit var binding: FragmentDetailListBinding
 
     private val viewModel: DetailViewModel by lazy {
-        ViewModelProviders.of(activity!!).get(DetailViewModel::class.java)
+        ViewModelProviders.of(this).get(DetailViewModel::class.java)
     }
 
     override fun onCreateView(
