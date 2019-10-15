@@ -113,12 +113,15 @@ class HistoryListFragment : Fragment() {
         val dialog = builder.create()
         dialog.show()
         dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener {
-            findNavController().navigate(
-                HistoryListFragmentDirections.actionHistoryListFragmentToDetailListFragment(
-                    dialog.query_dialog.input.et_game_id.text.toString().toInt()
-                )
-            )
-            dialog.dismiss()
+            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener {
+                val s = dialog.query_dialog.input.et_game_id.text.toString()
+                if(s.isNotEmpty()) {
+                    findNavController().navigate(
+                        HistoryListFragmentDirections.actionHistoryListFragmentToDetailListFragment(s.toInt())
+                    )
+                    dialog.dismiss()
+                }
+            }
         }
 
     }

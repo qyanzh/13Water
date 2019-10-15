@@ -77,12 +77,13 @@ class RankFragment : Fragment() {
         val dialog = builder.create()
         dialog.show()
         dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener {
-            findNavController().navigate(
-                RankFragmentDirections.actionRankFragmentToHistoryListFragment(
-                    (dialog.query_dialog.input.et_game_id.text.toString().toInt())
+            val s = dialog.query_dialog.input.et_game_id.text.toString()
+            if(s.isNotEmpty()) {
+                findNavController().navigate(
+                    RankFragmentDirections.actionRankFragmentToHistoryListFragment(s.toInt())
                 )
-            )
-            dialog.dismiss()
+                dialog.dismiss()
+            }
         }
     }
 
