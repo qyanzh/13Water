@@ -59,7 +59,7 @@ class GameViewModel : ViewModel() {
             stateString.value = "出牌异常"
         }
         if (auto.value!!) {
-            delay(1000)
+            delay(500)
             onNextClicked()
         }
     }

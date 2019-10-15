@@ -13,12 +13,6 @@ data class Card(
         else -> s.toInt()
     }
 
-    fun sameColorTo(other: Card) = this.color == other.color
-
-    fun sameFlowerTo(other:Card) = this.flower == other.flower
-
-    fun sameNumTo(other: Card) = this.num == other.num
-
     override fun compareTo(other: Card): Int {
         return if (this.num != other.num) {
             this.num - other.num

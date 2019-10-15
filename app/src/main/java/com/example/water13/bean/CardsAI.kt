@@ -50,7 +50,7 @@ class CardsAI(val cards: MutableList<Card>) {
         val copy: MutableList<Card> = cards.reversed().toMutableList()
         while (copy.size != 0) {
             val temp = mutableListOf<Card>()
-            temp.add(copy[0].copy())
+            temp.add(copy[0])
             for (i in 1..copy.lastIndex) {
                 if (copy[i].num == temp.last().num - 1) {
                     temp.add(copy[i])
@@ -106,7 +106,6 @@ class CardsAI(val cards: MutableList<Card>) {
                         }
                     }
                 }
-
             }
         }
         println("********")
