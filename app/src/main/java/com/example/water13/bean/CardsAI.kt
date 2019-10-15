@@ -165,7 +165,7 @@ class CardsAI(val cards: MutableList<Card>) {
     fun isLiuduiban() = duiziCount == 6
 
     /* 13.三顺子 3顺子 */
-    fun isSanshunzi(): Boolean = mergedList.size == 3
+    fun isSanshunzi(): Boolean = mergedList.size == 3 && mergedList.flatten().size==13
 
 
     /* 14.三同花 3同花 */
@@ -234,7 +234,7 @@ class CardsAI(val cards: MutableList<Card>) {
 
         val tempSubmit = mutableListOf<MutableList<Card>>()
 
-        cardsInFlowerOrder.filter { it.size >= 5 }.forEach {
+        cardsInFlowerOrder.filter { it.size >= 5 }.sortedByDescending { it.maxBy { it.num } }.forEach {
             CardsAI(it).mergedList.filter { it.size == 5 }.forEach {
                 it.let {
                     tempSubmit.add(it.toMutableList())
@@ -278,6 +278,7 @@ class CardsAI(val cards: MutableList<Card>) {
             }
         }
         restart("葫芦", tempSubmit, true)
+
 
         cardsInFlowerOrder.filter { it.size >= 5 }.forEach {
             if (tempSubmit.size < 3) {
@@ -371,6 +372,7 @@ class CardsAI(val cards: MutableList<Card>) {
         println(this)
         return this
     }
+
 
     private fun refresh(tempSubmit: MutableList<MutableList<Card>>) {
         restart("", tempSubmit, false)

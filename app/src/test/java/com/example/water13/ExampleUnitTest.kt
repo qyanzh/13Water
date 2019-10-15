@@ -202,8 +202,14 @@ class ExampleUnitTest {
     }
 
 
-    @After
-    fun pause() {
+    @Test fun twoTonghuaTest() {
+        val cardsString =
+            "&10 &9 &6 " +
+                    "*A *K *J *5 *4 "+
+                    "#4 #6 #10 #Q #A"
+        CardsAI(cardsString.toSortedCards().toMutableList().toMutableList()).apply {
+            solve()
+        }
     }
 }
 
