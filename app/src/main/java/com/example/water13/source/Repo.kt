@@ -7,7 +7,6 @@ import com.example.water13.bean.User
 import com.example.water13.component.NETWORK_ERROR_STRING
 import com.example.water13.component.SPF_FILE_NAME_USER
 import com.example.water13.component.getStatusMsg
-import com.squareup.moshi.Moshi
 import retrofit2.HttpException
 import java.net.UnknownHostException
 
@@ -87,9 +86,9 @@ object Repo {
         }
     }
 
-    suspend fun getHistoryList(user:User,limit:Int,page:Int):List<HistoryListResponse.Data> {
+    suspend fun getHistoryList(gamerId:Int, token:String, limit:Int, page:Int):List<HistoryListResponse.Data> {
         return withCatch{
-            Network.api.getHistoryListAsync(user.token, user.id, limit, page).await().data
+            Network.api.getHistoryListAsync(token, gamerId, limit, page).await().data
         }
     }
 

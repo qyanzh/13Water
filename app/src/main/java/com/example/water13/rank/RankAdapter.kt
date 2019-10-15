@@ -1,26 +1,20 @@
-package com.example.water13.history.details
+package com.example.water13.rank
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.water13.component.toCardImages
-import com.example.water13.component.loadPoker
-import com.example.water13.databinding.DetailListItemBinding
 import com.example.water13.databinding.RankListItemBinding
-import com.example.water13.source.HistoryDetailResponse.Detail
 import com.example.water13.source.RankResponse
-import kotlinx.android.synthetic.main.cards_vertical.view.*
 
-class RankAdapter(private val context: Context) :
+class RankAdapter(private val context: Context, private val clickListener: ItemListener) :
     ListAdapter<RankResponse, RankAdapter.ViewHolder>(RankDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(context, item)
+        holder.bind(context, item,clickListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,8 +25,9 @@ class RankAdapter(private val context: Context) :
     class ViewHolder private constructor(val binding: RankListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(context: Context, item: RankResponse) {
+        fun bind(context: Context, item: RankResponse,clickListener: ItemListener) {
             binding.rank = item
+            binding.clickListener = clickListener
             binding.position = adapterPosition
             binding.executePendingBindings()
         }
@@ -59,4 +54,10 @@ class RankDiffCallback : DiffUtil.ItemCallback<RankResponse>() {
         return oldItem == newItem
     }
 
+}
+
+class ItemListener(val clickListener: (gamerId: Int) -> Unit) {
+    fun onClick(gamerId: Int) {
+        clickListener(gamerId)
+    }
 }

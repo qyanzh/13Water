@@ -32,6 +32,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="gamerId"
+            app:argType="integer" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment_detail_list"
@@ -45,6 +48,10 @@
     <fragment
         tools:layout="@layout/fragment_rank_list"
         android:id="@+id/rankFragment"
-        android:name="com.example.water13.history.details.RankFragment"
-        android:label="排行榜" />
+        android:name="com.example.water13.rank.RankFragment"
+        android:label="排行榜" >
+        <action
+            android:id="@+id/action_rankFragment_to_historyListFragment"
+            app:destination="@id/historyListFragment" />
+    </fragment>
 </navigation>

@@ -1,16 +1,17 @@
 package com.example.water13.login
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.example.water13.*
+import com.example.water13.MainActivity
+import com.example.water13.R
 import com.example.water13.bean.User
 import com.example.water13.component.toast
 import com.example.water13.databinding.ActivityLoginBinding
+
 
 class LoginActivity : AppCompatActivity() {
 
@@ -22,13 +23,11 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(User.instance.username!="") {
-            navigateToMain()
-        } else {
-            binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
-            binding.model = viewModel
-            subscribeUi()
-        }
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        binding.model = viewModel
+        viewModel.uiUsername.value = User.instance.username
+        viewModel.uiPassword.value = User.instance.password
+        subscribeUi()
     }
 
     private fun subscribeUi() {
@@ -40,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
         }
         viewModel.message.observe(this, Observer {
             toast(it)
-            if(it.isNotEmpty()) {
+            if (it.isNotEmpty()) {
                 viewModel.onMsgShowed()
             }
         })

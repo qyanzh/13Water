@@ -13,6 +13,7 @@
         app:cardCornerRadius="2dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:onClick="@{()->clickListener.onClick(rank.player_id)}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="16dp">
@@ -69,6 +70,9 @@
         <variable
             name="rank"
             type="com.example.water13.source.RankResponse" />
+        <variable
+            name="clickListener"
+            type="com.example.water13.rank.ItemListener" />
     </data>
 
 </layout>

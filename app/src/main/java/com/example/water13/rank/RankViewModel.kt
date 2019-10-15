@@ -1,4 +1,4 @@
-package com.example.water13.history.details
+package com.example.water13.rank
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

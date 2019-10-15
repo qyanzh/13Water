@@ -8,7 +8,7 @@ import com.example.water13.source.HistoryDetailResponse.Detail
 import com.example.water13.source.Repo
 import kotlinx.coroutines.*
 
-class DetailViewModel() : ViewModel() {
+class DetailViewModel : ViewModel() {
 
     private val viewModelJob = Job()
 
