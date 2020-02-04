@@ -55,8 +55,9 @@ class GameViewModel : ViewModel() {
             submitCards()
             stateString.value = "出牌完成"
         } catch (e: Exception) {
-            message.value = e.message
+            e.printStackTrace()
             stateString.value = "出牌异常"
+            Repo.login(User.instance)
         }
         if (auto.value!!) {
             delay(1000)
@@ -68,7 +69,8 @@ class GameViewModel : ViewModel() {
     private suspend fun submitCards() {
         val solved = CardsAI(cardsString.value!!.toSortedCards().toMutableList()).solve().solved
         solvedString.value = solved.joinToString(" ")
-        Repo.submit(id,solved,User.instance)
+        Repo.submit(id, solved, User.instance)
+
     }
 
     override fun onCleared() {

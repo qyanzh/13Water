@@ -2,7 +2,6 @@ package com.example.water13.history.details
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.example.water13.bean.User
 import com.example.water13.source.HistoryDetailResponse.Detail
 import com.example.water13.source.Repo
@@ -17,7 +16,7 @@ class DetailViewModel : ViewModel() {
     val message = MutableLiveData<String>()
 
     fun onMsgShowed() {
-        message.value =""
+        message.value = ""
     }
 
     var detailsList = MutableLiveData<List<Detail>>()

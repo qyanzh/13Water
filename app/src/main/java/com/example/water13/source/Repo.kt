@@ -8,6 +8,7 @@ import com.example.water13.component.NETWORK_ERROR_STRING
 import com.example.water13.component.SPF_FILE_NAME_USER
 import com.example.water13.component.getStatusMsg
 import retrofit2.HttpException
+import timber.log.Timber
 import java.net.UnknownHostException
 
 object Repo {
@@ -90,6 +91,7 @@ object Repo {
     suspend fun submit(id: Int, cards: List<String>, user: User) {
         withCatch {
             Network.api.submitCardsAsync(user.token, CardsDto(id, cards)).await()
+            Timber.d("OkHttp:=====gameId:${id}")
         }
     }
 

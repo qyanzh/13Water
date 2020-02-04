@@ -2,8 +2,6 @@ package com.example.water13.rank
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.water13.bean.User
-import com.example.water13.source.HistoryDetailResponse.Detail
 import com.example.water13.source.RankResponse
 import com.example.water13.source.Repo
 import kotlinx.coroutines.*
@@ -21,7 +19,7 @@ class RankViewModel : ViewModel() {
     }
 
     fun onMsgShowed() {
-        message.value =""
+        message.value = ""
     }
 
     var rankList = MutableLiveData<List<RankResponse>>()

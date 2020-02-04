@@ -192,7 +192,7 @@ data class HistoryDetailResponse(
     data class Detail(
         val card: List<String>,
         val name: String,
-        val playerId: Int,
+        val player_id: Int,
         val score: Int
     )
 }

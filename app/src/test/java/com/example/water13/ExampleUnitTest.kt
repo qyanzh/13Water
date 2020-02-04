@@ -1,5 +1,7 @@
 package com.example.water13
 
+import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
 import com.example.water13.bean.Card
 import com.example.water13.bean.CardsAI
 import com.example.water13.component.toSortedCards
@@ -218,6 +220,90 @@ class ExampleUnitTest {
             solve()
         }
     }
+
+    @Test
+    fun twoTonghuaTest3() {
+        val cardsString =
+            "#K #Q &A *7 &2 \$Q \$K \$7 #4 \$10 #J \$J #3"
+        CardsAI(cardsString.toSortedCards().toMutableList()).apply {
+            solve()
+        }
+    }
+
+    @Test
+    fun specialTest() {
+        val cardsString =
+            "#K #Q &A " +
+                    "*7 &2 \$Q \$K \$7 " +
+                    "#4 \$10 #J \$J #3"
+        CardsAI(cardsString.toSortedCards().toMutableList()).apply {
+            solve()
+        }
+    }
+
+    @Test
+    fun specialTest2() {
+        val cardsString =
+            "#K #Q &A *7 &2 \$Q \$K \$7 #4 \$10 #J \$J #3"
+        CardsAI(cardsString.toSortedCards().toMutableList()).apply {
+            solve()
+        }
+    }
+
+    @Test
+    fun specialTest3() {
+        val cardsString =
+            "#2 &3 *3 \$5 *5 #8 *9 #10 #J *J &Q #K *K"
+        CardsAI(cardsString.toSortedCards().toMutableList()).apply {
+            solve()
+        }
+    }
+
+    @Test
+    fun specialTest4() {
+        val cardsString =
+            "$6 *7 *Q &10 *A $10 #6 *J &9 #A *10 #K #8"
+        CardsAI(cardsString.toSortedCards().toMutableList()).apply {
+            solve()
+        }
+    }
+    @Test
+    fun specialTest5() {
+        val cardsString =
+            "&10 *6 #Q *9 #5 &9 *5 #6 *J \$8 #J &7 #8"
+        CardsAI(cardsString.toSortedCards().toMutableList()).apply {
+            solve()
+        }
+    }
+    @Test
+    fun specialTest6() {
+        val cardsString =
+            "*A &5 *K *2 &A #6 \$9 #2 &8 \$8 \$7 #7 &4"
+        CardsAI(cardsString.toSortedCards().toMutableList()).apply {
+            solve()
+        }
+    }
+
+    @Test
+    fun utilTest() {
+        val cardsString =
+            "#K #Q &A *7 &2 \$Q \$K \$7 #4 \$10 #J \$J #3"
+        println(ImageUtil.convertCardsToFileNames(cardsString))
+        //转为 [c_fangkuaik, c_fangkuaiq, c_hongxina, c_meihua7, c_hongxin2, c_heitaoq,
+        // c_heitaok, c_heitao7, c_fangkuai4, c_heitao10, c_fangkuaij, c_heitaoj, c_fangkuai3]
+    }
+
+    @Test
+    fun subListTest() {
+        val cardsString =
+            "#K #Q &A *7 &2 \$Q \$K \$7 #4 \$10 #J \$J #3"
+        println(cardsString.toSortedCards().subList(0, 3).size)
+        println(ImageUtil.convertCardsToFileNames(cardsString))
+        //转为 [c_fangkuaik, c_fangkuaiq, c_hongxina, c_meihua7, c_hongxin2, c_heitaoq,
+        // c_heitaok, c_heitao7, c_fangkuai4, c_heitao10, c_fangkuaij, c_heitaoj, c_fangkuai3]
+    }
+
+    // #方块 $黑桃 &红桃 *梅花
 }
 
 

@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="@{detail.name + ` (`+ detail.playerId + `)`}"
+                android:text="@{detail.name + ` (`+ detail.player_id + `)`}"
                 android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@+id/include"
                 app:layout_constraintTop_toTopOf="@+id/include"

@@ -62,7 +62,7 @@ class GameFragment : Fragment() {
         })
         viewModel.message.observe(this, Observer {
             toast(it)
-            if(it.isNotEmpty()) {
+            if(!it.isNullOrEmpty()) {
                 viewModel.onMsgShowed()
             }
         })

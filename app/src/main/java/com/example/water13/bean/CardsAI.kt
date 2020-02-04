@@ -70,7 +70,8 @@ class CardsAI(val cards: MutableList<Card>) {
                         if (shunziList[i].subList(index, 5) == shunziList[j]) {
                             val subList = shunziList[i].subList(0, index)
                             shunziList[j] = (subList + shunziList[j]).toMutableList()
-                            shunziList[i].minusAssign(subList)
+                            shunziList[i] =
+                                shunziList[i].subList(index, shunziList[i].lastIndex + 1)
                             break@outer
                         }
                     } else if (sumSize == 8) {
@@ -79,13 +80,14 @@ class CardsAI(val cards: MutableList<Card>) {
                             if (num == shunziList[i][0].num + 1) {
                                 val subList = shunziList[i].subList(0, 2)
                                 shunziList[j] = (shunziList[j] + subList).toMutableList()
-                                shunziList[i].minusAssign(subList)
+                                shunziList[i] =
+                                    shunziList[i].subList(2, shunziList[i].lastIndex + 1)
                                 break@outer
                             } else if (num == shunziList[i].last().num - 1) {
                                 val last = shunziList[i].lastIndex
                                 val subList = shunziList[i].subList(last - 1, last + 1)
                                 shunziList[j] = (shunziList[j] + subList).toMutableList()
-                                shunziList[i].minusAssign(subList)
+                                shunziList[i] = shunziList[i].subList(0, last - 1)
                                 break@outer
                             }
                         } else {
@@ -94,13 +96,14 @@ class CardsAI(val cards: MutableList<Card>) {
                             if (sub1 == shunziList[j]) {
                                 val subList = shunziList[i].subList(0, 1)
                                 shunziList[j] = (subList + shunziList[j]).toMutableList()
-                                shunziList[i].minusAssign(subList)
+                                shunziList[i] =
+                                    shunziList[i].subList(1, shunziList[i].lastIndex + 1)
                                 break@outer
                             } else if (sub2 == shunziList[j]) {
                                 val last = shunziList[i].lastIndex
                                 val subList = shunziList[i].subList(last, last + 1)
                                 shunziList[j] = (shunziList[j] + subList).toMutableList()
-                                shunziList[i].minusAssign(subList)
+                                shunziList[i] = shunziList[i].subList(0, last)
                                 break@outer
                             }
                         }
@@ -208,6 +211,7 @@ class CardsAI(val cards: MutableList<Card>) {
         solved.add(front)
         solved.add(mid)
         solved.add(end)
+        print("!!!!!!Special:$orgin")
     }
 
     fun solve(): CardsAI {
@@ -227,7 +231,6 @@ class CardsAI(val cards: MutableList<Card>) {
             || isSantonghua()
         ) {
             submitSpecial()
-            println(mergedList)
             return this
         }
         //特殊牌型
@@ -281,10 +284,12 @@ class CardsAI(val cards: MutableList<Card>) {
         restart("葫芦", tempSubmit, true)
 
 
-        cardsInFlowerOrder.filter { it.size >= 5 }.sortedByDescending { it.maxBy { it.num } }
+        var tonghuaCount = 0
+        cardsInFlowerOrder.filter { it.size >= 5 }
             .forEach {
                 if (tempSubmit.size < 3) {
                     tempSubmit.add(it.subList(0, 5).toMutableList())
+                    tonghuaCount++
                     refresh(tempSubmit)
                 }
             }
@@ -363,10 +368,24 @@ class CardsAI(val cards: MutableList<Card>) {
         }
         tempSubmit[2].addAll(cards)
 
+        if (tonghuaCount == 2) {
+            tempSubmit[0].sortByDescending { it.num }
+            tempSubmit[1].sortByDescending { it.num }
+            for (i in 0 until 5) {
+                if (tempSubmit[0][i].num == tempSubmit[1][i].num) continue
+                if (tempSubmit[0][i].num < tempSubmit[1][i].num) {
+                    val temp = tempSubmit[1].toMutableList()
+                    tempSubmit[1] = tempSubmit[0]
+                    tempSubmit[0] = temp
+                    break
+                } else break
+            }
+        }
+
         var a = 0
         tempSubmit.forEach {
             print("tempSubmit[${a++}]:$it\n")
-            it.reversed().joinToString(" ").let {
+            it.joinToString(" ").let {
                 solved.add(it)
             }
         }

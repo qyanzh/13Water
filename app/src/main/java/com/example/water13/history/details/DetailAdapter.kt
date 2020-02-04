@@ -68,7 +68,7 @@ class DetailAdapter(private val context: Context) :
 class DetailDiffCallback : DiffUtil.ItemCallback<Detail>() {
 
     override fun areItemsTheSame(oldItem: Detail, newItem: Detail): Boolean {
-        return oldItem.playerId == newItem.playerId
+        return oldItem.player_id == newItem.player_id
     }
 
     override fun areContentsTheSame(oldItem: Detail, newItem: Detail): Boolean {
